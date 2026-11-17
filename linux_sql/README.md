@@ -149,17 +149,6 @@ crontab -e
 * * * * * bash /home/rocky/dev/jarvis_data_eng_SheidaKhodabakhshian/linux_sql/scripts/host_usage.sh localhost 5432 host_agent postgres password > /tmp/host_usage.log
 ```
 
-### queries.sql
-
-```
--- Verify inserted data in host_usage table
-SELECT * FROM host_usage;
--- Verify inserted data in host_info table
-SELECT * FROM host_info;
---show average memory usage as a percentage over 1 mins interval
-SELECT hu.timestamp,ROUND(((hi.total_mem-hu.memory_free)::NUMERIC/NULLIF(hi.total_mem,0))*100),2) AS memory_usage_percentage FROM host_usage hu JOIN host_info hi ON hu.host_id=hi.id ORDER BY hu.timestamp ASC;
-```
-
 ## Database Modeling
 
 ### host_info table schema
