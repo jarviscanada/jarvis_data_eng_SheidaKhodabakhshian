@@ -254,6 +254,13 @@ The PostgreSQL instance is deployed using docker.
 # To stop the docker container, run the command:
 ./scripts/psql_docker.sh stop
 ```
+The host_info.sh is executed manually once while host_usage.sh is scheduled to run every minute using Cron.
+```
+# To edit crontab jobs
+crontab -e
+# Usage to schedule the execution of host_usage.sh every minute.
+* * * * * bash /home/rocky/dev/jarvis_data_eng_SheidaKhodabakhshian/linux_sql/scripts/host_usage.sh localhost 5432 host_agent postgres password > /tmp/host_usage.log
+```
 
 # Improvements
 
