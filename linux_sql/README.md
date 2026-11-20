@@ -149,6 +149,13 @@ crontab -e
 * * * * * bash /home/rocky/dev/jarvis_data_eng_SheidaKhodabakhshian/linux_sql/scripts/host_usage.sh localhost 5432 host_agent postgres password > /tmp/host_usage.log
 ```
 
+### queries.sql
+#### Description
+SQL queries to address business problems. One query groups hosts by hardware info (CPU number), another displays the average used memory in percentage over 5 mins interval for the host. The third displays detected host failures. 
+#### Script Usage
+```
+psql -h localhost -U postgres -d host_agent -f sql/queries.sql
+```
 ## Database Modeling
 
 ### host_info table schema
@@ -205,17 +212,18 @@ postgres=# \c host_agent;
 4. View host_info and host_usage tables to ensure the data was collected
 
 ```
-host_agent=# SELECT * FROM host_info;
- id |                                        hostname
+host_agent=# SELECT * from host_info;
+ id |                                        hostname                           
               | cpu_number | cpu_architecture |           cpu_model            |
- cpu_mhz | l2_cache |      timestamp      | total_mem
+ cpu_mhz | l2_cache |      timestamp      | total_mem 
 ----+---------------------------------------------------------------------------
 --------------+------------+------------------+--------------------------------+
 ---------+----------+---------------------+-----------
-  1 | jrvs-remote-desktop.northamerica-northeast2-c.c.project-45fc28f4-d7d6-4ae5
+  2 | jrvs-remote-desktop.northamerica-northeast2-c.c.project-45fc28f4-d7d6-4ae5
 -b43.internal |          2 | x86_64           | Intel(R) Xeon(R) CPU @ 2.20GHz |
-    2200 |      256 | 2026-11-13 21:11:28 |      4808
+    2200 |      256 | 2026-11-19 21:30:23 |   7346580
 (1 row)
+
 host_agent=# SELECT * FROM host_usage;
       timestamp      | host_id | memory_free | cpu_idle | cpu_kernel | disk_io |
  disk_available
