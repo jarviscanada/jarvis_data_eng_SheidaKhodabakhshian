@@ -14,7 +14,7 @@ cpu_architecture=$(echo "$lscpu_out"  | egrep "^Architecture:" | awk '{print $2}
 cpu_model=$(echo "$lscpu_out"  | egrep "^Model name:" | awk -F: '{print $2}' | xargs)
 cpu_mhz=$(echo "$lscpu_out"  | egrep "^Model name:" | awk '{print $7 * 1000}' | xargs)
 l2_cache=$(echo "$lscpu_out"  | egrep "^L2 cache:" | awk '{print $3}' | xargs)
-total_mem=$(grep "MemTotal" /proc/meminfo | awk '{print $2}' | xargs)
+total_mem=$(vmstat --unit M | tail -1 | awk '{print $4}')
 timestamp=$(vmstat -t | awk 'NR==3 {print $18, $19}')
 insert_stmt="INSERT INTO host_info(hostname, cpu_number, cpu_architecture, cpu_model, cpu_mhz, l2_cache, "timestamp", total_mem) VALUES('$hostname', '$cpu_number', '$cpu_architecture', '$cpu_model', '$cpu_mhz', '$l2_cache','$timestamp', '$total_mem')";
 export PGPASSWORD=$psql_password
