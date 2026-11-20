@@ -11,7 +11,7 @@ END;
 $$
 LANGUAGE PLPGSQL;
 SELECT hu.host_id, round5(hu.timestamp) AS rounded_timestamp,
-       ROUND(AVG((hi.total_mem-(hu.memory_free))*100.0/hi.total_mem),2) AS avg_mem_usage_pct
+       ROUND(AVG((hi.total_mem-(hu.memory_free*1024))*100.0/hi.total_mem),2) AS avg_mem_usage_pct
 FROM host_usage hu join host_info hi on hu.host_id = hi.id
 GROUP BY hu.host_id, rounded_timestamp
 ORDER BY hu.host_id, rounded_timestamp;
